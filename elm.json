@@ -2,7 +2,7 @@
     "type": "package",
     "name": "PaackEng/elm-ui-dialog",
     "summary": "Encode and decode JSON values",
-    "license": "MIT",
+    "license": "BSD-3-Clause",
     "version": "1.0.0",
     "exposed-modules": [
         "Dialog"
