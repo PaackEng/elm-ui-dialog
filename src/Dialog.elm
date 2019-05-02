@@ -17,39 +17,42 @@ import Element.Input as Input
 To use this, include this view in your _top-level_ view function,
 right at the top of the DOM tree, like so:
 
-    type Message
+    type Msg
       = ...
       | ...
-      | Close
+      | CloseDialog
 
 
-    view : -> Model -> Element Message
+    view : -> Model -> Element Msg
     view model =
-      div
-        []
-        [ ...
-        , ...your regular view code....
-        , ...
-        , Dialog.view
-            (if model.shouldShowDialog then
-              Just { closeMessage = Just Close
-                   , containerAttributes = [padding 2]
-                   , maskAttributes = []
-                   , headerAttributes = []
-                   , bodyAttributes = []
-                   , footerAttributes = []
-                   , header = Just (text "Alert!")
-                   , body = Just (text "Let me tell you something important...")
-                   , footer = Nothing
-                   }
-             else
-              Nothing
-            )
-        ]
+        let
+            config =
+                { closeMessage = Just CloseDialog
+                , maskAttributes = []
+                , containerAttributes = [ padding 10 ]
+                , headerAttributes = []
+                , bodyAttributes = []
+                , footerAttributes = []
+                , header = Just (text "Hello world")
+                , body = Nothing
+                , footer = Nothing
+                }
 
-It's then up to you to replace `model.shouldShowDialog` with whatever
+            dialogConfig =
+                if model.showDialog then
+                    Just config
+
+                else
+                    Nothing
+        in
+        Element.layout
+            [ inFront (Dialog.view dialogConfig)
+            ]
+            contentView
+
+It's then up to you to replace `model.showDialog` with whatever
 logic should cause the dialog to be displayed, and to handle an
-`AcknowledgeDialog` message with whatever logic should occur when the user
+`CloseDialog` message with whatever logic should occur when the user
 closes the dialog.
 
 See the `examples/` directory for examples of how this works for apps
@@ -80,16 +83,15 @@ view maybeConfig =
 
 wrapHeader : Config msg -> Element msg
 wrapHeader { header, headerAttributes, closeMessage } =
-    case header of
-        Nothing ->
-            none
+    if header == Nothing && closeMessage == Nothing then
+        none
 
-        Just header_ ->
-            row
-                ([ width fill, padding 2 ] ++ headerAttributes)
-                [ el [ alignLeft ] header_
-                , maybe none closeButton closeMessage
-                ]
+    else
+        row
+            ([ width fill, padding 2 ] ++ headerAttributes)
+            [ el [ alignLeft ] <| Maybe.withDefault none header
+            , maybe none closeButton closeMessage
+            ]
 
 
 closeButton : msg -> Element msg
