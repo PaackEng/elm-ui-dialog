@@ -89,7 +89,7 @@ wrapHeader { header, headerAttributes, closeMessage } =
     else
         row
             ([ width fill, padding 2 ] ++ headerAttributes)
-            [ el [ alignLeft ] <| Maybe.withDefault none header
+            [ el [ width fill, alignLeft ] <| Maybe.withDefault none header
             , maybe none closeButton closeMessage
             ]
 
@@ -122,6 +122,7 @@ wrapFooter { footer, footerAttributes } =
             el ([ width fill, padding 1 ] ++ footerAttributes) footer_
 
 
+dialogMask : Color
 dialogMask =
     rgba 0 0 0 0.3
 

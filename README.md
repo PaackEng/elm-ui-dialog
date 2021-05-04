@@ -6,6 +6,13 @@ Elm UI modal dialog boxes that fits in neatly with the Elm architecture.
 
 See the `examples/` directory for two fully-worked examples:
 
+move inside the examples directory and run the elm-reactor to try the examples:
+
+```
+cd examples/
+elm reactor
+```
+
 ## Installation
 
 From your top-level directory - the one with `elm.json` in - call:
@@ -26,6 +33,6 @@ Totally based on [Kris Jenkins](https://github.com/etaque) elm-dialog package
 
 ## License
 
-Copyright © 2019 Paack Logistics Iberia SL
+Copyright © 2021 Paack Logistics Iberia SL
 
 Distributed under the BSD 3-Clause License.
