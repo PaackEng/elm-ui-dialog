@@ -1,4 +1,4 @@
-module Basic exposing (main)
+module Advanced exposing (main)
 
 {-| -}
 
